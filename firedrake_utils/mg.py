@@ -2,7 +2,8 @@
 import firedrake as fd
 
 
-# transfer between mesh levels on a manifold by first ensuring meshes are nested
+# transfer between mesh levels on a manifold
+# by first ensuring meshes are nested
 class ManifoldTransfer(object):
     def __init__(self):
         '''
@@ -115,7 +116,8 @@ class ManifoldTransfer(object):
             fine.ufl_domain().coordinates_bk)
 
 
-# create a transfer manager for the MixedFunctionSpaceW using the ManifoldTransfer operators
+# create a transfer manager using the ManifoldTransfer operators
+# for the MixedFunctionSpace W
 def manifold_transfer_manager(W):
     Vs = W.split()
     vtransfer = ManifoldTransfer()
@@ -124,6 +126,7 @@ def manifold_transfer_manager(W):
         transfers[V.ufl_element()] = (vtransfer.prolong, vtransfer.restrict,
                                       vtransfer.inject)
     return fd.TransferManager(native_transfers=transfers)
+
 
 # set up mesh levels for multigrid scheme
 def high_order_mesh_hierarchy(mh, degree, R0):

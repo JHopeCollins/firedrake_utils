@@ -27,8 +27,7 @@ def form_function_depth(mesh, h, u, q):
     uup = 0.5 * (fd.dot(u, n) + abs(fd.dot(u, n)))
 
     return (- fd.inner(fd.grad(q), u)*h*fd.dx
-            + fd.jump(q)*(uup('+')*h('+')
-                        - uup('-')*h('-'))*fd.dS)
+            + fd.jump(q)*(uup('+')*h('+') - uup('-')*h('-'))*fd.dS)
 
 
 def form_function_velocity(mesh, g, b, f, h, u, v):
