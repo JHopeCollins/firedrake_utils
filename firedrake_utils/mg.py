@@ -146,7 +146,12 @@ def high_order_icosahedral_mesh_hierarchy(mh, degree, R0):
 
 
 # multigrid mesh for an icosahedral sphere
-def icosahedral_mesh(R0, base_level, degree, distribution_parameters, nrefs, comm=fd.COMM_WORLD):
+def icosahedral_mesh(R0,
+                     base_level,
+                     degree,
+                     distribution_parameters,
+                     nrefs,
+                     comm=fd.COMM_WORLD):
     basemesh = fd.IcosahedralSphereMesh(
                     radius=R0,
                     refinement_level=base_level,

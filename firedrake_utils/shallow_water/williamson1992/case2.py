@@ -46,13 +46,13 @@ def velocity_function(x, y, z, V1, uref=U0, name="velocity"):
     return v.project(velocity_expression(x, y, z, uref=uref))
 
 
-# depth field h
-def depth_expression(x, y, z, href=H0, uref=U0):
+# elevation field eta
+def elevation_expression(x, y, z, href=H0, uref=U0):
     z0 = z/earth.Radius
-    dh = (earth.Radius*earth.Omega*uref + 0.5*uref*uref)*(z0*z0)/earth.Gravity
-    return href - dh
+    k = (earth.Radius*earth.Omega*uref + uref*uref/2.0)
+    return - k*(z0*z0)/earth.Gravity
 
 
-def depth_function(x, y, z, V2, href=H0, uref=U0, name="depth"):
-    h = fd.Function(V2, name=name)
-    return h.interpolate(depth_expression(x, y, z, href=href, uref=uref))
+def elevation_function(x, y, z, V2, href=H0, uref=U0, name="elevation"):
+    eta = fd.Function(V2, name=name)
+    return eta.project(elevation_expression(x, y, z, href=href, uref=uref))

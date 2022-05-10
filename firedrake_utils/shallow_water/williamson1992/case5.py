@@ -53,14 +53,14 @@ def velocity_function(x, y, z, V1, uref=U0, name="velocity"):
     return v.project(velocity_expression(x, y, z, uref=uref))
 
 
-# depth field h
-def depth_expression(x, y, z, href=H0, uref=U0):
-    return case2.depth_expression(x, y, z, uref=uref)
+# elevation field eta
+def elevation_expression(x, y, z, href=H0, uref=U0):
+    return case2.elevation_expression(x, y, z, href=href, uref=uref)
 
 
-def depth_function(x, y, z, V2, href=H0, uref=U0, name="depth"):
-    h = fd.Function(V2, name=name)
-    return h.interpolate(depth_expression(x, y, z, href=href, uref=uref))
+def elevation_function(x, y, z, V2, href=H0, uref=U0, name="elevation"):
+    eta = fd.Function(V2, name=name)
+    return eta.project(elevation_expression(x, y, z, href=href, uref=uref))
 
 
 # topography field b
@@ -87,7 +87,7 @@ def topography_function(x, y, z, V2,
                         height=Mountain_height,
                         theta_c=Mountain_centre_theta,
                         lambda_c=Mountain_centre_lambda,
-                        name="depth"):
+                        name="topography"):
 
     b = fd.Function(V2, name=name)
     bexp = topography_expression(x, y, z,
