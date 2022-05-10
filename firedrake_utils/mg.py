@@ -129,7 +129,7 @@ def manifold_transfer_manager(W):
 
 
 # set up mesh levels for multigrid scheme
-def high_order_mesh_hierarchy(mh, degree, R0):
+def high_order_icosahedral_mesh_hierarchy(mh, degree, R0):
     meshes = []
     for m in mh:
         X = fd.VectorFunctionSpace(m, "Lagrange", degree)
@@ -146,15 +146,16 @@ def high_order_mesh_hierarchy(mh, degree, R0):
 
 
 # multigrid mesh for an icosahedral sphere
-def icosahedral_mesh(R0, base_level, degree, distribution_parameters, nrefs):
+def icosahedral_mesh(R0, base_level, degree, distribution_parameters, nrefs, comm=fd.COMM_WORLD):
     basemesh = fd.IcosahedralSphereMesh(
                     radius=R0,
                     refinement_level=base_level,
-                    degree=degree,
-                    distribution_parameters=distribution_parameters)
+                    degree=1,
+                    distribution_parameters=distribution_parameters,
+                    comm=comm)
     del basemesh._radius
     mh = fd.MeshHierarchy(basemesh, nrefs)
-    mh = high_order_mesh_hierarchy(mh, degree, R0)
+    mh = high_order_icosahedral_mesh_hierarchy(mh, degree, R0)
     for mesh in mh:
         xf = mesh.coordinates
         mesh.transfer_coordinates = fd.Function(xf)
